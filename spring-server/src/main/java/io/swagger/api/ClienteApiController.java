@@ -157,17 +157,25 @@ public class ClienteApiController implements ClienteApi {
     }
 
     public ResponseEntity<Clientes> consultaPorSobrenome(@ApiParam(value = "Sobrenome do cliente.",required=true) @PathVariable("sobrenome") String sobrenome) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Clientes>(objectMapper.readValue("\"\"", Clientes.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Clientes>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        ResponseEntity<Clientes> responseEntity = null;
+
+        try {
+
+            List<Cliente> clienteslz = clienteDAO.consultaPorSobrenome(sobrenome);
+
+            if(clienteslz == null || (clienteslz.size() <= 0)) {
+                responseEntity = new ResponseEntity<Clientes>(HttpStatus.NOT_FOUND);
+            }else {
+                responseEntity = new ResponseEntity<Clientes>(objectMapper.readValue(objectMapper.writeValueAsString(clienteslz), Clientes.class), HttpStatus.OK);
             }
+
+        } catch (IOException e) {
+            log.error("Falha o tentar consultar clientes por sobrenome.", e);
+            responseEntity = new ResponseEntity<Clientes>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<Clientes>(HttpStatus.NOT_IMPLEMENTED);
+        return responseEntity;
     }
 
     public ResponseEntity<Void> excluiExistente(@ApiParam(value = "Numero do id do cliente.",required=true) @PathVariable("id") Integer id) {
