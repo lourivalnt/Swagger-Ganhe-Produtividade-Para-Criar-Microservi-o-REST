@@ -179,8 +179,25 @@ public class ClienteApiController implements ClienteApi {
     }
 
     public ResponseEntity<Void> excluiExistente(@ApiParam(value = "Numero do id do cliente.",required=true) @PathVariable("id") Integer id) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+
+        ResponseEntity<Void> responseEntity = null;
+
+        try {
+
+            boolean excluido = clienteDAO.exclui(id);
+
+            if(excluido) {
+                responseEntity = new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+            }else {
+                throw new RuntimeException("Erro ao tentar excluir cliente");
+            }
+
+        } catch (Exception e) {
+            log.error("Falha ao tentar excluir cliente por id.", e);
+            responseEntity = new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return responseEntity;
     }
 
 }
