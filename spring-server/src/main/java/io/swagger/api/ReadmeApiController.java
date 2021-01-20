@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-01-15T11:33:04.592Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-07-18T02:52:12.827Z")
 
 @Controller
 public class ReadmeApiController implements ReadmeApi {
@@ -37,17 +37,7 @@ public class ReadmeApiController implements ReadmeApi {
     }
 
     public ResponseEntity<String> readme() {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<String>(objectMapper.readValue("\"\"", String.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        return new ResponseEntity<String>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<String>("Esta API tem por objetivo criar, alterar, consultar e excluir clientes.", HttpStatus.OK);
     }
 
 }

@@ -33,7 +33,7 @@ public class ClientesApiController implements ClientesApi {
     private final ObjectMapper objectMapper;
     private final HttpServletRequest request;
     private ClienteDAO clienteDAO;
-
+    
 
     @org.springframework.beans.factory.annotation.Autowired
     public ClientesApiController(ObjectMapper objectMapper, HttpServletRequest request) {
@@ -43,42 +43,42 @@ public class ClientesApiController implements ClientesApi {
     }
 
     /**
-     501 - NAO DESENVOLVIDO
-     return new ResponseEntity<Clientes>(HttpStatus.NOT_IMPLEMENTED);
-
-     400 - REQUISICAO INVALIDA
-     return new ResponseEntity<Clientes>(HttpStatus.BAD_REQUEST);
-
-     401 - REQUISICAO NAO AUTORIZADA
-     return new ResponseEntity<Clientes>(HttpStatus.UNAUTHORIZED);
+	501 - NAO DESENVOLVIDO
+    return new ResponseEntity<Clientes>(HttpStatus.NOT_IMPLEMENTED);
+	
+	400 - REQUISICAO INVALIDA
+	return new ResponseEntity<Clientes>(HttpStatus.BAD_REQUEST);
+	
+	401 - REQUISICAO NAO AUTORIZADA
+	return new ResponseEntity<Clientes>(HttpStatus.UNAUTHORIZED);
      **/
     public ResponseEntity<Clientes> consultaTodos() {
-
-        ResponseEntity<Clientes> responseEntity = null;
-
-        try {
-
-            List<Cliente> clientes = clienteDAO.todos();
-
-            if(clientes != null) {
-
-                //404 NENHUM REGISTRO ENCONTRADO
-                if(clientes.size() <= 0) {
-                    responseEntity = new ResponseEntity<Clientes>(objectMapper.readValue(objectMapper.writeValueAsString(clientes), Clientes.class), HttpStatus.NOT_FOUND);
-                }else {
-
-                    //200 SUCESSO AO CONSULTAR
-                    responseEntity = new ResponseEntity<Clientes>(objectMapper.readValue(objectMapper.writeValueAsString(clientes), Clientes.class), HttpStatus.OK);
-                }
-            }
-
-        }catch(Exception e) {
-
-            log.error("Erro ao tentar consultar clientes.");
-            responseEntity = new ResponseEntity<Clientes>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        return responseEntity;
+        
+    	ResponseEntity<Clientes> responseEntity = null;
+    	
+    	try {
+    		
+    		List<Cliente> clientes = clienteDAO.todos();
+    		
+    		if(clientes != null) {
+    			
+    			//404 NENHUM REGISTRO ENCONTRADO
+    			if(clientes.size() <= 0) {
+    				responseEntity = new ResponseEntity<Clientes>(objectMapper.readValue(objectMapper.writeValueAsString(clientes), Clientes.class), HttpStatus.NOT_FOUND);
+    			}else {
+    				
+    				//200 SUCESSO AO CONSULTAR
+    				responseEntity = new ResponseEntity<Clientes>(objectMapper.readValue(objectMapper.writeValueAsString(clientes), Clientes.class), HttpStatus.OK);
+    			}
+    		}
+    		
+    	}catch(Exception e) {
+    		
+    		log.error("Erro ao tentar consultar clientes.");
+    		responseEntity = new ResponseEntity<Clientes>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+    	
+    	return responseEntity;
     }
 
 }

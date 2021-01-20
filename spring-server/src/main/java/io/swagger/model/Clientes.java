@@ -12,10 +12,7 @@ import javax.validation.constraints.*;
  * Clientes
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-01-15T11:33:04.592Z")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-07-18T02:52:12.827Z")
 
 public class Clientes extends ArrayList<Cliente>  {
 
